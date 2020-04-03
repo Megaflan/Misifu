@@ -1,0 +1,32 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Misifu.ViewModels;assembly=Misifu"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Misifu.Views.TranslationEditorView">
+  
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+  
+  <StackPanel>
+    <DataGrid Items="{Binding Translation}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Source"
+                            Binding="{Binding Source}"
+                            Width="2*"
+                            IsReadOnly="True"
+                            />
+        <DataGridTextColumn Header="Target"
+                            Binding="{Binding Target}"
+                            Width="2*" />
+      </DataGrid.Columns>
+    </DataGrid>
+    
+    <TextBlock Margin="5" FontWeight="Bold">Source:</TextBlock>
+    <TextBox TextWrapping="Wrap" IsReadOnly="True"></TextBox>
+    <TextBlock Margin="5" FontWeight="Bold">Target:</TextBlock>
+    <TextBox AcceptsTab="True" AcceptsReturn="True" TextWrapping="Wrap" ></TextBox>
+  </StackPanel>
+</UserControl>

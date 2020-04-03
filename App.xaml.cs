@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Misifu.ViewModels;
 using Misifu.Views;
+using Misifu.Views.Windows;
 
 namespace Misifu
 {

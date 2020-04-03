@@ -1,14 +1,14 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
 namespace Misifu.Views
 {
-    public class MainWindow : Window
+    public class TranslationEditorView : UserControl
     {
-        public MainWindow()
+        public TranslationEditorView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void InitializeComponent()

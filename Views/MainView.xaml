@@ -1,0 +1,13 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="150"
+             x:Class="Misifu.Views.MainView">
+  <DockPanel>
+    <StackPanel Spacing="10" Margin="20">
+      <Button Width="250" Height="50" FontWeight="Bold">New Project</Button>
+      <Button Width="250" Height="50" FontWeight="Bold">Open Project</Button>
+    </StackPanel>
+  </DockPanel>
+</UserControl>
