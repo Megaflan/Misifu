@@ -1,43 +1,60 @@
-﻿using Misifu.Models;
+﻿using Avalonia.Controls;
+using DynamicData.Binding;
+using Misifu.Models;
+using Misifu.Views.Windows;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
+using Yarhl.FileSystem;
 
 namespace Misifu.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<TranslationModel> Translation { get; }
+        public static ObservableCollection<TranslationModel> Translation { get; set; }
+        public ObservableCollection<DirectoryRootModel> Directories { get; set; }
 
         public MainWindowViewModel()
         {
-            Translation = new ObservableCollection<TranslationModel>(TestModel());
+            Translation = new ObservableCollection<TranslationModel>(TranslationModel());
+            Directories = new ObservableCollection<DirectoryRootModel>();
         }
 
-
-        private IEnumerable<TranslationModel> TestModel()
+        public async Task OpenFolderEvent()
         {
-            var testModel = new List<TranslationModel>()
+            var folderDialog = new OpenFolderDialog();
+            var result = await folderDialog.ShowAsync(MainWindow.Instance);
+            if (result != null)
             {
-                new TranslationModel()
+                folderDialog.Directory = result;
+                var folderNode = NodeFactory.FromDirectory(result, "*.po");
+                var dirModel = new DirectoryRootModel()
                 {
-                    Source = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                    Target = "",
-                },
-                new TranslationModel()
-                {
-                    Source = "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                    Target = "",
-                },
-                new TranslationModel()
-                {
-                    Source = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    Target = "",
-                }
-            };
+                    RootNode = folderNode,
+                    Name = folderNode.Path,                    
+                };
 
-            return testModel;
+                foreach (var node in folderNode.Children)
+                {
+                    dirModel.Nodes.Add(new DirectoryNodeModel
+                    {
+                        Name = node.Name,
+                        Node = node,
+                    });
+                }
+
+                Directories.Add(dirModel);
+            }            
+        }    
+
+        private IEnumerable<TranslationModel> TranslationModel()
+        {
+            var model = new List<TranslationModel>();
+
+            return model;
         }
     }
 }
