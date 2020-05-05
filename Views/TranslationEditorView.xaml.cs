@@ -49,6 +49,7 @@ namespace Misifu.Views
         {
             try
             {
+                entry = null; //Dispose a la selección del MainDataGrid
                 DirectoryNodeModel a = (DirectoryNodeModel)dirTreeView.SelectedItem;
                 if (a.Node.Format.GetType().Name == "Po")
                     po = a.Node.GetFormatAs<Po>();
