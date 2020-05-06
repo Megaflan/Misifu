@@ -18,7 +18,7 @@ namespace Misifu.Views
         private DataGrid mainDataGrid;
         private TextBox sourceBox;
         private TextBox targetBox;
-        private TranslationModel entry;
+        private TranslationModel translationModel;
         private Po po;
         public TranslationEditorView()
         {
@@ -36,9 +36,12 @@ namespace Misifu.Views
         {
             try
             {
-                entry = (TranslationModel)mainDataGrid.SelectedItem;
-                sourceBox.Text = entry.Source;
-                targetBox.Text = entry.Target;                
+                translationModel = (TranslationModel)mainDataGrid.SelectedItem;
+                if (translationModel != null)
+                {
+                    sourceBox.Text = translationModel.Source;
+                    targetBox.Text = translationModel.Target;
+                }                             
             }
             catch (Exception)
             {
@@ -49,7 +52,6 @@ namespace Misifu.Views
         {
             try
             {
-                entry = null; //Dispose a la selección del MainDataGrid
                 DirectoryNodeModel a = (DirectoryNodeModel)dirTreeView.SelectedItem;
                 if (a.Node.Format.GetType().Name == "Po")
                     po = a.Node.GetFormatAs<Po>();

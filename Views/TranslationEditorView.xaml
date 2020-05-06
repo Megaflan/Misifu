@@ -10,10 +10,24 @@
   <Design.DataContext>
     <vm:MainWindowViewModel/>
   </Design.DataContext>
-  
-  <StackPanel Orientation="Horizontal">
-    <Grid MinWidth="200" RowDefinitions="*,auto">      
-      <TreeView x:Name="dirTreeView" Grid.Row="0" Items="{Binding Directories}" SelectionMode="Single">
+
+  <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,Auto" ShowGridLines="True">    
+    <Grid Grid.Column="0" MinWidth="200" RowDefinitions="Auto,*">
+      <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <Button Command="{Binding OpenFileEvent}">
+          Open
+        </Button>
+        <Button Command="{Binding OpenFolderEvent}">
+          Open Folder...
+        </Button>
+        <Button Command="{Binding SaveFileEvent}">
+          Save
+        </Button>
+        <Button Command="{Binding SaveAllFilesEvent}">
+          Save All...
+        </Button>
+      </StackPanel>      
+      <TreeView x:Name="dirTreeView" Grid.Row="1" Items="{Binding Directories}" SelectionMode="Single">
         <TreeView.DataTemplates>
           <TreeDataTemplate DataType="models:DirectoryRootModel" ItemsSource="{Binding Nodes}">
             <TextBlock Foreground="Red" Text="{Binding Name}" />
@@ -23,17 +37,13 @@
           </DataTemplate>
         </TreeView.DataTemplates>
       </TreeView>
-      
-      <Button Grid.Row="1" Command="{Binding OpenFolderEvent}">
-        Open Folder...
-      </Button>
     </Grid>
-    <Grid RowDefinitions="*,auto">
+    <Grid Grid.Column="1" ColumnDefinitions="*,Auto" RowDefinitions="*,Auto">
       <DataGrid x:Name="mainDataGrid" Grid.Row="0" Items="{Binding Translation}" RowHeight="40" CanUserResizeColumns="True">
         <DataGrid.Columns>
           <DataGridTextColumn Header="Source"                              
                               Binding="{Binding Source}"
-                              Width="auto"                              
+                              Width="*"                              
                               IsReadOnly="True"
                               />
           <DataGridTextColumn Header="Target"
@@ -48,7 +58,10 @@
         <TextBox x:Name="sourceBox" TextWrapping="Wrap" IsReadOnly="True" NewLine="\n" Height="75"></TextBox>
         <TextBlock Margin="5" FontWeight="Bold">Target:</TextBlock>
         <TextBox x:Name="targetBox" AcceptsTab="True" AcceptsReturn="True" NewLine="\n" Height="75" TextWrapping="Wrap"></TextBox>
-      </StackPanel>
+      </StackPanel>      
     </Grid>
-  </StackPanel>
+    <Panel Grid.Row="2">
+      <TextBlock Margin="5">Status: OK</TextBlock>
+    </Panel>
+  </Grid>
 </UserControl>

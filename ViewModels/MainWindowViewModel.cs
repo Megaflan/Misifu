@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using Yarhl.FileSystem;
+using Yarhl.Media.Text;
 
 namespace Misifu.ViewModels
 {
@@ -16,6 +17,7 @@ namespace Misifu.ViewModels
     {
         public static ObservableCollection<TranslationModel> Translation { get; set; }
         public ObservableCollection<DirectoryRootModel> Directories { get; set; }
+        private Po po;
 
         public MainWindowViewModel()
         {
@@ -48,7 +50,41 @@ namespace Misifu.ViewModels
 
                 Directories.Add(dirModel);
             }            
-        }    
+        }
+
+        public async Task OpenFileEvent()
+        {
+            var fileDialog = new OpenFileDialog();
+            fileDialog.Filters.Add(new FileDialogFilter()
+            {
+                Name = "PO format",
+                Extensions = new List<string> { "*.po" }
+            });
+            var result = await fileDialog.ShowAsync(MainWindow.Instance);
+            if (result != null)
+            {
+                try
+                {                    
+                    var a = NodeFactory.FromFile(result[0]);
+                    if (a.Format.GetType().Name == "Po")
+                        po = a.GetFormatAs<Po>();
+                    else
+                        po = a.TransformWith<Binary2Po>().GetFormatAs<Po>();
+                    MainWindowViewModel.Translation.Clear();
+                    foreach (var entry in po.Entries)
+                    {
+                        MainWindowViewModel.Translation.Add(new TranslationModel
+                        {
+                            Source = entry.Original,
+                            Target = entry.Text,
+                        });
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
 
         private IEnumerable<TranslationModel> TranslationModel()
         {
