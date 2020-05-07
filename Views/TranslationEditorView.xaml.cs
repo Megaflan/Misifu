@@ -19,7 +19,6 @@ namespace Misifu.Views
         private TextBox sourceBox;
         private TextBox targetBox;
         private TranslationModel translationModel;
-        private Po po;
         public TranslationEditorView()
         {
             this.InitializeComponent();
@@ -51,14 +50,14 @@ namespace Misifu.Views
         private void DirTreeView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
-            {
+            {                
                 DirectoryNodeModel a = (DirectoryNodeModel)dirTreeView.SelectedItem;
                 if (a.Node.Format.GetType().Name == "Po")
-                    po = a.Node.GetFormatAs<Po>();
+                    MainWindowViewModel.PoNode = a.Node.GetFormatAs<Po>();
                 else
-                    po = a.Node.TransformWith<Binary2Po>().GetFormatAs<Po>();
+                    MainWindowViewModel.PoNode = a.Node.TransformWith<Binary2Po>().GetFormatAs<Po>();
                 MainWindowViewModel.Translation.Clear();
-                foreach (var entry in po.Entries)
+                foreach (var entry in MainWindowViewModel.PoNode.Entries)
                 {
                     MainWindowViewModel.Translation.Add(new TranslationModel
                     {

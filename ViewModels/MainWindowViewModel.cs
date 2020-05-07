@@ -16,8 +16,8 @@ namespace Misifu.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         public static ObservableCollection<TranslationModel> Translation { get; set; }
-        public ObservableCollection<DirectoryRootModel> Directories { get; set; }
-        private Po po;
+        public static ObservableCollection<DirectoryRootModel> Directories { get; set; }
+        public static Po PoNode;
 
         public MainWindowViewModel()
         {
@@ -33,6 +33,7 @@ namespace Misifu.ViewModels
             {
                 folderDialog.Directory = result;
                 var folderNode = NodeFactory.FromDirectory(result, "*.po");
+                var tags = folderNode.Tags["DirectoryInfo"];
                 var dirModel = new DirectoryRootModel()
                 {
                     RootNode = folderNode,
@@ -58,20 +59,20 @@ namespace Misifu.ViewModels
             fileDialog.Filters.Add(new FileDialogFilter()
             {
                 Name = "PO format",
-                Extensions = new List<string> { "*.po" }
+                Extensions = new List<string> { "po" }
             });
             var result = await fileDialog.ShowAsync(MainWindow.Instance);
             if (result != null)
             {
                 try
-                {                    
+                {
                     var a = NodeFactory.FromFile(result[0]);
                     if (a.Format.GetType().Name == "Po")
-                        po = a.GetFormatAs<Po>();
+                        PoNode = a.GetFormatAs<Po>();
                     else
-                        po = a.TransformWith<Binary2Po>().GetFormatAs<Po>();
+                        PoNode = a.TransformWith<Binary2Po>().GetFormatAs<Po>();
                     MainWindowViewModel.Translation.Clear();
-                    foreach (var entry in po.Entries)
+                    foreach (var entry in PoNode.Entries)
                     {
                         MainWindowViewModel.Translation.Add(new TranslationModel
                         {
@@ -84,6 +85,11 @@ namespace Misifu.ViewModels
                 {
                 }
             }
+        }
+
+        public async Task SaveFileEvent()
+        {
+            Console.WriteLine("sorpresa!");
         }
 
         private IEnumerable<TranslationModel> TranslationModel()
