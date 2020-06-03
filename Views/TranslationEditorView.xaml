@@ -30,7 +30,7 @@
       <TreeView x:Name="dirTreeView" Grid.Row="1" Items="{Binding Directories}" SelectionMode="Single">
         <TreeView.DataTemplates>
           <TreeDataTemplate DataType="models:DirectoryRootModel" ItemsSource="{Binding Nodes}">
-            <TextBlock Foreground="Red" Text="{Binding Name}" />
+            <TextBlock FontWeight="Bold" Text="{Binding Name}" />
           </TreeDataTemplate>
           <DataTemplate DataType="models:DirectoryNodeModel">
             <TextBlock Text="{Binding Name}" />
@@ -55,9 +55,9 @@
 
       <StackPanel Grid.Row="1">
         <TextBlock Margin="5" FontWeight="Bold">Source:</TextBlock>
-        <TextBox x:Name="sourceBox" TextWrapping="Wrap" IsReadOnly="True" NewLine="\n" Height="75"></TextBox>
+        <TextBox x:Name="sourceBox" TextWrapping="Wrap" IsReadOnly="True" Height="75"></TextBox>
         <TextBlock Margin="5" FontWeight="Bold">Target:</TextBlock>
-        <TextBox x:Name="targetBox" AcceptsTab="True" AcceptsReturn="True" NewLine="\n" Height="75" TextWrapping="Wrap"></TextBox>
+        <TextBox x:Name="targetBox" AcceptsTab="True" AcceptsReturn="True" Height="75" TextWrapping="Wrap"></TextBox>
       </StackPanel>      
     </Grid>
     <Panel Grid.Row="2">
