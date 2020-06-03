@@ -61,7 +61,7 @@
       </StackPanel>      
     </Grid>
     <Panel Grid.Row="2">
-      <TextBlock Margin="5">Status: OK</TextBlock>
+      <TextBlock x:Name="statusBox" Margin="5">Status: OK</TextBlock>
     </Panel>
   </Grid>
 </UserControl>

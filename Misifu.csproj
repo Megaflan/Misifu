@@ -23,14 +23,14 @@
     <None Remove="Views\Windows\MainWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.999-cibuild0007109-beta" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.999-cibuild0007109-beta" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.999-cibuild0007109-beta" />
-	<PackageReference Include="Avalonia.Controls.DataGrid" Version="0.9.999-cibuild0007109-beta" />
+    <PackageReference Include="Avalonia" Version="0.9.999-cibuild0008062-beta" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.999-cibuild0008062-beta" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.999-cibuild0008062-beta" />
+	<PackageReference Include="Avalonia.Controls.DataGrid" Version="0.9.999-cibuild0008062-beta" />
 	<PackageReference Include="Dock.Model" Version="0.9.9" />
 	<PackageReference Include="Dock.Model.ReactiveUI" Version="0.9.9" />
-	<PackageReference Include="Yarhl" Version="3.0.0-alpha10" />
-	<PackageReference Include="Yarhl.Media" Version="3.0.0-alpha10" />
+	<PackageReference Include="Yarhl" Version="3.0.0-alpha11" />
+	<PackageReference Include="Yarhl.Media" Version="3.0.0-alpha11" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Windows\MainWindow.xaml">

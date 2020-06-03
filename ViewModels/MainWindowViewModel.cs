@@ -6,9 +6,12 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Yarhl.FileFormat;
 using Yarhl.FileSystem;
+using Yarhl.IO;
 using Yarhl.Media.Text;
 
 namespace Misifu.ViewModels
@@ -18,6 +21,7 @@ namespace Misifu.ViewModels
         public static ObservableCollection<TranslationModel> Translation { get; set; }
         public static ObservableCollection<DirectoryRootModel> Directories { get; set; }
         public static Po PoNode;
+        public static FileInfo FileInfo { get; set; }
 
         public MainWindowViewModel()
         {
@@ -33,12 +37,12 @@ namespace Misifu.ViewModels
             {
                 folderDialog.Directory = result;
                 var folderNode = NodeFactory.FromDirectory(result, "*.po");
-                var tags = folderNode.Tags["DirectoryInfo"];
                 var dirModel = new DirectoryRootModel()
                 {
                     RootNode = folderNode,
-                    Name = folderNode.Path,                    
-                };
+                    Name = folderNode.Path,
+                    Tags = folderNode.Tags["DirectoryInfo"],
+                };                
 
                 foreach (var node in folderNode.Children)
                 {
@@ -79,7 +83,8 @@ namespace Misifu.ViewModels
                             Source = entry.Original,
                             Target = entry.Text,
                         });
-                    }
+                    }                    
+                    FileInfo = a.Tags["FileInfo"];
                 }
                 catch (Exception)
                 {
@@ -89,7 +94,21 @@ namespace Misifu.ViewModels
 
         public async Task SaveFileEvent()
         {
-            Console.WriteLine("sorpresa!");
+            try
+            {
+                for (int i = 0; i < PoNode.Entries.Count; i++)
+                {
+                    var entry = PoNode.Entries[i];
+                    entry.Translated = Translation[i].Target;
+                }
+                BinaryFormat a = (BinaryFormat)Yarhl.FileFormat.ConvertFormat.With(new Po2Binary(), PoNode);
+                a.Stream.WriteTo(FileInfo.ToString());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private IEnumerable<TranslationModel> TranslationModel()
